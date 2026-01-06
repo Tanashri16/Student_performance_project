@@ -1,4 +1,4 @@
-# 🎓 Student Analytics: Hybrid ML Performance Predictor
+# Performance Insight Engine
 
 A data-driven Python application that combines **Linear Regression** and **Random Forest Classification** to predict student scores and identify "At-Risk" individuals while providing automated improvement suggestions.
 
