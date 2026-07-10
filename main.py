@@ -63,9 +63,19 @@ df_sql['pass_fail'] = df_sql['final_score'].apply(lambda x: 1 if x >= 40 else 0)
 X_class = df_sql[['attendance', 'study_hours', 'previous_marks', 'assignments']]
 y_class = df_sql['pass_fail']
 
+# Split data into training and testing
+X_train, X_test, y_train, y_test = train_test_split(
+    X_class, y_class, test_size=0.2, random_state=42
+)
+
 # Train classifier
-clf = RandomForestClassifier()
-clf.fit(X_class, y_class)
+clf = RandomForestClassifier(random_state=42)
+clf.fit(X_train, y_train)
+
+# Calculate Classification Accuracy
+y_pred = clf.predict(X_test)
+accuracy = accuracy_score(y_test, y_pred)
+print("\nClassification Accuracy:", round(accuracy * 100, 2), "%")
 
 # Predict Pass/Fail for a new student
 new_student_df_class = pd.DataFrame([[60, 2.0, 55, 5]], columns=X_class.columns)
@@ -81,7 +91,7 @@ print("\nFeature Importance (Classification):")
 for feature, importance in zip(X_class.columns, clf.feature_importances_):
     print(feature, ":", importance)
 
-#  STEP 9: Suggest Improvement Areas (NEW CODE)
+#  STEP 9: Suggest Improvement Areas 
 def suggest_improvements(row):
     improvements = []
     if row['attendance'] < 75:
